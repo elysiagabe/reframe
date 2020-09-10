@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 
 const typeDefs = require('./typeDefs');
@@ -6,11 +6,11 @@ const resolvers = require('./resolvers');
 const { MONGODB } = require('../config.js');
 
 const server = new ApolloServer({
-    typeDefs, 
+    typeDefs,
     resolvers
 });
 
-mongoose.connect(MONGODB, { 
+mongoose.connect(MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
