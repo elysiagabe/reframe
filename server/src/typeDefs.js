@@ -10,8 +10,21 @@ module.exports = gql`
 
     type User {
         id: ID!
+        firstName: String
+        lastName: String
         email: String!
         token: String!
+    }
+
+    type Entry {
+        id: ID!
+        thought1: String!
+        thought2: String
+        stress1: Int!
+        stress2: Int
+        createdAt: String!
+        userId: String!
+        labels: [String]!
     }
 
     input RegisterInput {
@@ -24,13 +37,20 @@ module.exports = gql`
         test: String!
         labels: [Label]!
         label(id: ID!): Label
+
+        entry(id: ID!): Entry
+        entriesByUser: [Entry]
+        entriesByLabel(label: String!): [Entry]
+
+        accountInfo: User
     }
 
     type Mutation {
-        createLabel(name: String!): Label!
+        createEntry(thought1: String!, thought2: String!, stress1: Int!, stress2: Int!, labels: [String]): Entry!
+        deleteEntry(id: ID!): String! 
 
         register(registerInput: RegisterInput): User!
-
         login(email: String!, password: String!): User!
+        deleteAcct: User!
     }
 `;

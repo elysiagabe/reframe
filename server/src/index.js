@@ -7,7 +7,8 @@ const { MONGODB } = require('../config.js');
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: ({ req }) => ({ req }) //lets us access request body with context...used for auth on protected routes
 });
 
 mongoose.connect(MONGODB, {
