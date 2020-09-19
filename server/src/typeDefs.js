@@ -10,8 +10,8 @@ module.exports = gql`
 
     type User {
         id: ID!
-        firstName: String
-        lastName: String
+        firstName: String!
+        lastName: String!
         email: String!
         token: String!
     }
@@ -28,6 +28,8 @@ module.exports = gql`
     }
 
     input RegisterInput {
+        firstName: String!
+        lastName: String!
         email: String!
         password: String!
         confirmPassword: String!

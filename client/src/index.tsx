@@ -1,13 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import {
+  ApolloClient, 
+  ApolloProvider, 
+  InMemoryCache,
+  NormalizedCacheObject
+} from '@apollo/client';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+
 import App from './App';
+import theme from './theme';
 import * as serviceWorker from './serviceWorker';
 
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  uri: 'http://localhost:4000/',
+  cache: new InMemoryCache()
+});
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <ApolloProvider client={client}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </ApolloProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

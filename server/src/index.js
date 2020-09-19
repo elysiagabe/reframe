@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 
@@ -8,7 +10,10 @@ const { MONGODB } = require('../config.js');
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({ req }) //lets us access request body with context...used for auth on protected routes
+    context: ({ req }) => ({ req }), //lets us access request body with context...used for auth on protected routes
+    engine: {
+        reportSchema: true
+    }
 });
 
 mongoose.connect(MONGODB, {
@@ -17,7 +22,7 @@ mongoose.connect(MONGODB, {
 })
     .then(() => {
         console.log('Connected to MongoDB successfully')
-        return server.listen({ port: 4000 })
+        return server.listen({ port: process.env.PORT || 4000 })
     })
     .then((res) => {
         console.log(`🚀 server up & running at ${res.url}`)

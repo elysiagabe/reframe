@@ -5,6 +5,14 @@ module.exports.validateRegisterInput = (
 ) => {
     const errors = {};
 
+    if(firstName.trim() === '') {
+        errors.firstName = 'First name is required'
+    }
+
+    if(lastName.trim() === '') {
+        errors.lastName = 'Last name is required'
+    }
+
     if(email.trim() === '') {
         errors.email = 'Email is required';
     } else {

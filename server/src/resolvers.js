@@ -75,7 +75,7 @@ module.exports = {
             try {
                 const entries = await Entry.find({ $and: [ {userId}, { labels: { $in: [label] } } ] }).sort({ createdAt: -1 });
                 if (entries) {
-                    return entries
+                    return [entries]
                 } else {
                     throw new Error('No entries under that label')
                 }
@@ -166,9 +166,9 @@ module.exports = {
             }
         },
 
-        register: async (_, { registerInput: { email, password, confirmPassword } }) => {
+        register: async (_, { registerInput: { firstName, lastName, email, password, confirmPassword } }) => {
             // Validate user data (make sure to have server validation)
-            const { valid, errors } = validateRegisterInput(email, password, confirmPassword);
+            const { valid, errors } = validateRegisterInput(firstName, lastName, email, password, confirmPassword);
             if (!valid) {
                 throw new UserInputError('Errors', { errors });
             }
@@ -182,9 +182,12 @@ module.exports = {
                 })
             }
             // Hash password and create an auth token
-            password = await bcrypt.hash(password, 12);
+            const rounds = process.env.HASH_ROUNDS || 12;
+            password = await bcrypt.hash(password, rounds);
 
             const newUser = new User({
+                firstName,
+                lastName,
                 email,
                 password
             });
