@@ -6,6 +6,7 @@ import {
   InMemoryCache,
   NormalizedCacheObject
 } from '@apollo/client';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -22,10 +23,12 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 ReactDOM.render(
   // <React.StrictMode>
   <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </Router>
   </ApolloProvider>,
   // </React.StrictMode>,
   document.getElementById('root')
