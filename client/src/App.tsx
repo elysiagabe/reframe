@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // Components
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import TopNav from './components/TopNav';
 import Footer from './components/Footer';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +42,7 @@ function App() {
 
   return (
     <div className={backgroundImg ? classes.backgroundImg : classes.noBackgroundImg}>
-  
+      <TopNav />
         <Switch>
           <Route path="/login">
             <Login />
