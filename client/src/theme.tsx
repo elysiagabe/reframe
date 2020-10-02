@@ -3,6 +3,10 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
     typography: {
         fontFamily: 'QuickSand',
+        fontWeightLight: 300,
+        fontWeightRegular: 400,
+        fontWeightMedium: 500,
+        fontWeightBold: 700,
     },
     palette: {
         primary: {
@@ -30,6 +34,9 @@ const theme = createMuiTheme({
             primary: '#2E2E2E',
             secondary: '#A5ABB0',
             disabled: '#CBCED0'
+        },
+        background: {
+            default: '#FFFFFF',
         },
         divider: '#EBC8BD',
     },

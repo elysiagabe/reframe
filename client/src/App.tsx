@@ -10,6 +10,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import TopNav from './components/TopNav';
 import Footer from './components/Footer';
+import Home from './components/home/index';
 
 const useStyles = makeStyles((theme) => ({
   noBackgroundImg: {
@@ -34,7 +35,7 @@ function App() {
   const location = useLocation();
 
   let backgroundImg; 
-  if (location.pathname === '/login' || location.pathname === '/signup') {
+  if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/') {
     backgroundImg = true;
   } else {
     backgroundImg = false;
@@ -42,7 +43,8 @@ function App() {
 
   return (
     <div className={backgroundImg ? classes.backgroundImg : classes.noBackgroundImg}>
-      <TopNav />
+      {(location.pathname !== '/login' && location.pathname !=='/signup') ? <TopNav /> : null}
+
         <Switch>
           <Route path="/login">
             <Login />
@@ -50,9 +52,12 @@ function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
+          <Route path="/">
+            <Home />
+          </Route>
         </Switch>
 
-        <Footer />
+      <Footer />
 
     </div>
   );
