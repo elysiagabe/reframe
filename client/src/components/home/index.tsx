@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <div>
             <Container maxWidth="md">
-                <Box display="flex" flexWrap="wrap" flexDirection="column" alignItems="center">
+                <Box display="flex" flexWrap="wrap" flexDirection="column" alignItems="center" >
                     <Greeting />
                     <NewActivityButton />
                 </Box>

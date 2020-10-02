@@ -6,12 +6,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     greeting: {
         fontSize: '20px',
         textTransform: 'uppercase',
-        marginTop: '60px',
+        marginTop: '6.5rem',
     },
     question: {
-        fontSize: '64px',
+        fontSize: '72px',
         fontWeight: theme.typography.fontWeightLight,
-        padding: '28px'
+        padding: '3rem'
     },
 }))
 
@@ -20,7 +20,7 @@ const Greeting = () => {
 
     return (
         <>
-        <Typography align="center" className={classes.greeting}>Hi ~NAME~</Typography>
+        <Typography align="center" className={classes.greeting}>Hi firstname</Typography>
         <Typography align="center" className={classes.question}>What's on your mind?</Typography>
         </>
     )

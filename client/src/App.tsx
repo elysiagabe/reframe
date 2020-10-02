@@ -26,7 +26,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
     backgroundAttachment: 'fixed',
   },
-  
+  pageContainer: {
+    position: 'relative',
+    minHeight: '100vh',
+  },
+  contentWrap: {
+    paddingBottom: '2rem',
+  },
 }));
 
 function App() {
@@ -34,7 +40,7 @@ function App() {
 
   const location = useLocation();
 
-  let backgroundImg; 
+  let backgroundImg;
   if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/') {
     backgroundImg = true;
   } else {
@@ -43,22 +49,25 @@ function App() {
 
   return (
     <div className={backgroundImg ? classes.backgroundImg : classes.noBackgroundImg}>
-      {(location.pathname !== '/login' && location.pathname !=='/signup') ? <TopNav /> : null}
+      <div className={classes.pageContainer}>
+        <div className={classes.contentWrap}>
+          {(location.pathname !== '/login' && location.pathname !== '/signup') ? <TopNav /> : null}
 
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signup">
-            <SignUp />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <SignUp />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
 
-      <Footer />
-
+        </div>
+        <Footer />
+      </div>
     </div>
   );
 }

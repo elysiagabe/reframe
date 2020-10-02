@@ -1,11 +1,22 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography, Box } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    footer: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: '2rem',
+    }
+}))
 
 const Footer = () => {
+    const classes = useStyles();
+
     return (
-        <footer>
-            <Box pt={5}>
+        <footer >
+            <Box className={classes.footer}>
                 <Typography variant="body2" color="textSecondary" align="center">
                     &copy; {new Date().getFullYear()} ReFrame by Elysia Gabe
                 </Typography>
