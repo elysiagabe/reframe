@@ -11,6 +11,7 @@ import SignUp from './components/SignUp';
 import TopNav from './components/TopNav';
 import Footer from './components/Footer';
 import Home from './components/home/index';
+import Learn from './components/learn/index';
 
 const useStyles = makeStyles((theme) => ({
   noBackgroundImg: {
@@ -59,6 +60,9 @@ function App() {
             </Route>
             <Route path="/signup">
               <SignUp />
+            </Route>
+            <Route path="/learn">
+              <Learn />
             </Route>
             <Route path="/">
               <Home />

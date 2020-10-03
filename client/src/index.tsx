@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  ApolloClient, 
-  ApolloProvider, 
+  ApolloClient,
+  ApolloProvider,
   InMemoryCache,
   NormalizedCacheObject
 } from '@apollo/client';
@@ -22,14 +22,14 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 
 ReactDOM.render(
   // <React.StrictMode>
-  <ApolloProvider client={client}>
-    <Router>
+  <Router>
+    <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <App />
       </ThemeProvider>
-    </Router>
-  </ApolloProvider>,
+    </ApolloProvider>
+  </Router>,
   // </React.StrictMode>,
   document.getElementById('root')
 );
