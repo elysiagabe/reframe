@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Tabs, Tab, Box } from '@material-ui/core'; 
 
 import Logo from '../assets/reframe_logo.png';
 
 interface NavTabsProps {
-    value: number;
-    onChange: (event: React.ChangeEvent<{}>, newValue: number) => void; 
+    value: string;
+    onChange: (event: React.ChangeEvent<{}>, newValue: string) => void; 
 }
 
 interface NavTabProps {
     label: string;
+    value: string;
 }
 
 const StyledNavTabs = withStyles((theme: Theme) =>
@@ -53,20 +55,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const TopNav = () => {
+    const history = useHistory();
     const classes = useStyles();
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState("/");
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
+        history.push(newValue)
     }
 
     return (
         <Box className={classes.navContainer}>
             <img src={Logo} alt="Reframe logo" className={classes.logo} />
             <StyledNavTabs value={value} onChange={handleChange} aria-label="Navigation Menu">
-                <StyledNavTab label="Home" />
-                <StyledNavTab label="Learn" /> 
-                <StyledNavTab label="Account" />
+                <StyledNavTab label="Home" value="/" />
+                <StyledNavTab label="Learn" value="/learn" /> 
+                <StyledNavTab label="Account" value="/account"/>
             </StyledNavTabs>
         </Box>
     )
