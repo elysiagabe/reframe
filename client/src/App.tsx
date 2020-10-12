@@ -15,7 +15,7 @@ import Learn from './components/learn/index';
 
 const useStyles = makeStyles((theme) => ({
   noBackgroundImg: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#FEFBFB',
   },
   backgroundImg: {
     marginTop: 'none',

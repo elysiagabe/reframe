@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Tabs, Tab, Box } from '@material-ui/core'; 
 
@@ -56,8 +56,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const TopNav = () => {
     const history = useHistory();
+    const location = useLocation();
+
+    // console.log(location)
+
     const classes = useStyles();
-    const [value, setValue] = useState("/");
+    const [value, setValue] = useState(location.pathname);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
