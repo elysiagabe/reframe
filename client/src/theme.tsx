@@ -35,9 +35,9 @@ const theme = createMuiTheme({
             secondary: '#A5ABB0',
             disabled: '#CBCED0'
         },
-        // background: {
-        //     default: '#FFFFFF',
-        // },
+        background: {
+            default: '#FFFFFF',
+        },
         divider: '#EBC8BD',
     },
 });

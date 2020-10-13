@@ -62,6 +62,7 @@ const Login = () => {
                                 fullWidth
                                 id="password"
                                 label="Password"
+                                type="password"
                             />
                         </Grid>
                     </Grid>

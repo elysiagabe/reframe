@@ -1,7 +1,6 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-
-import Logo from '../assets/reframe_logo.png';
+import React, { useState } from 'react';
+import { gql, useMutation } from '@apollo/client'
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -13,6 +12,9 @@ import {
     Box,
     Container
 } from '@material-ui/core';
+
+import { useForm } from '../utils/hooks';
+import Logo from '../assets/reframe_logo.png';
 
 export const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,8 +42,71 @@ export const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignUp = () => {
+const REGISTER_USER = gql`
+    mutation register(
+        $firstName: String!
+        $lastName: String!
+        $email: String!
+        $password: String!
+        $confirmPassword: String!
+    ) {
+        register(registerInput: {
+            firstName: $firstName
+            lastName: $lastName
+            email: $email
+            password: $password
+            confirmPassword: $confirmPassword
+        }) {
+            id
+            firstName
+            token
+        }
+    }
+`;
+
+interface FormErrors {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+}
+
+const SignUp: React.FC<FormErrors> = () => {
     const classes = useStyles();
+    const history = useHistory();
+    
+    const [errors, setErrors] = useState({
+        firstName: null,
+        lastName: null,
+        email: null,
+        password: null,
+        confirmPassword: null
+    })
+
+    const { onChange, onSubmit, formValues } = useForm(registerUser, {
+        firstName: '',
+        lastName: '', 
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    const [addUser, { loading }] = useMutation(REGISTER_USER, {
+        update(_, result) {
+            history.push("/")
+        },
+        onError(error) {
+            setErrors(error?.graphQLErrors[0]?.extensions?.exception?.errors)
+        },
+        variables: formValues
+    });
+
+    function registerUser() {
+        addUser();
+    }
+
+    if (loading) return <p>Loading...</p>
 
     return (
         <Container component="main" maxWidth="xs">
@@ -61,7 +126,7 @@ const SignUp = () => {
                     </Grid>
                 </Box>
 
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={onSubmit}>
                     <Grid container spacing={2}>
                         {/* FIRST NAME */}
                         <Grid item xs={12} sm={6}>
@@ -73,7 +138,10 @@ const SignUp = () => {
                                 fullWidth
                                 id="firstName"
                                 label="First Name"
-                                autoFocus
+                                value={formValues.firstName}
+                                onChange={onChange}
+                                error={errors.firstName ? true : false}
+                                helperText={errors.firstName ? errors.firstName : null}
                             />
                         </Grid>
                         {/* LAST NAME */}
@@ -86,6 +154,10 @@ const SignUp = () => {
                                 fullWidth
                                 id="lastName"
                                 label="Last Name"
+                                value={formValues.lastName}
+                                onChange={onChange}
+                                error={errors.lastName ? true : false}
+                                helperText={errors.lastName ? errors.lastName : null}
                             />
                         </Grid>
                         {/* EMAIL */}
@@ -98,6 +170,10 @@ const SignUp = () => {
                                 fullWidth
                                 id="email"
                                 label="Email Address"
+                                value={formValues.email}
+                                onChange={onChange}
+                                error={errors.email ? true : false}
+                                helperText={errors.email ? errors.email : null}
                             />
                         </Grid>
                         {/* PASSWORD */}
@@ -110,6 +186,10 @@ const SignUp = () => {
                                 fullWidth
                                 id="password"
                                 label="Password"
+                                value={formValues.password}
+                                onChange={onChange}
+                                error={errors.password ? true : false}
+                                helperText={errors.password ? errors.password : null}
                             />
                         </Grid>
                         {/* CONFIRM PASSWORD */}
@@ -122,6 +202,10 @@ const SignUp = () => {
                                 fullWidth
                                 id="confirmPassword"
                                 label="Confirm Password"
+                                value={formValues.confirmPassword}
+                                onChange={onChange}
+                                error={errors.confirmPassword ? true : false}
+                                helperText={errors.confirmPassword ? errors.confirmPassword: null}
                             />
                         </Grid>
                     </Grid>
