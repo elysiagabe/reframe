@@ -148,12 +148,12 @@ module.exports = {
             // Check to see if account exists & password is correct 
             const user = await User.findOne({ email })
             if (!user) {
-                errors.general = 'User not found';
+                errors.email = 'User not found';
                 throw new UserInputError('Account not found', { errors });
             }
             const match = await bcrypt.compare(password, user.password);
             if (!match) {
-                errors.general = 'Incorrect password';
+                errors.password = 'Incorrect password';
                 throw new UserInputError('Incorrect password', { errors });
             }
             // Create auth token

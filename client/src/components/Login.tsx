@@ -1,10 +1,7 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 
-import Logo from '../assets/reframe_logo.png';
-
-import { useStyles } from './SignUp';
-// import { makeStyles } from '@material-ui/core/styles';
 import {
     Typography, 
     TextField, 
@@ -14,11 +11,62 @@ import {
     Box, 
     Container
 } from '@material-ui/core';
+import { useStyles } from './SignUp';
 
+import { useForm } from '../utils/hooks';
+import Logo from '../assets/reframe_logo.png';
 
+const LOGIN_USER = gql`
+    mutation login(
+        $email: String!
+        $password: String!
+    ){
+        login(email: $email, password: $password) {
+            id
+            firstName
+            token
+        }
+    }
+`;
 
-const Login = () => {
+interface FormErrors {
+    email?: string;
+    password?: string;
+}
+
+const Login: React.FC<FormErrors> = () => {
     const classes = useStyles();
+    const history = useHistory();
+
+    const [errors, setErrors] = useState({
+        email: null,
+        password: null
+    })
+
+    useEffect(() => {
+        console.log("Errors changed...", errors)
+    }, [errors])
+
+    const { onChange, onSubmit, formValues } = useForm(loginUserCallback, {
+        email: '',
+        password: ''
+    });
+
+    const [loginUser, { loading }] = useMutation(LOGIN_USER, {
+        update(_, result) {
+            history.push("/")
+        },
+        onError(error) {
+            setErrors(error?.graphQLErrors[0]?.extensions?.exception?.errors)
+        },
+        variables: formValues
+    });
+
+    function loginUserCallback() {
+        loginUser();
+    }
+
+    if (loading) return <p>Loading...</p>
 
     return (
         <Container component="main" maxWidth="xs">
@@ -37,7 +85,7 @@ const Login = () => {
                     </Grid>
                 </Box>
 
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={onSubmit}>
                     <Grid container spacing={2}>
                         {/* EMAIL */}
                         <Grid item xs={12}>
@@ -49,7 +97,10 @@ const Login = () => {
                                 fullWidth
                                 id="email"
                                 label="Email Address"
-                                autoFocus
+                                value={formValues.email}
+                                onChange={onChange}
+                                error={errors.email ? true : false}
+                                helperText={errors.email ? errors.email : null}
                             />
                         </Grid>
                         {/* PASSWORD */}
@@ -63,6 +114,10 @@ const Login = () => {
                                 id="password"
                                 label="Password"
                                 type="password"
+                                value={formValues.password}
+                                onChange={onChange}
+                                error={errors.password ? true : false}
+                                helperText={errors.password ? errors.password : null}
                             />
                         </Grid>
                     </Grid>
