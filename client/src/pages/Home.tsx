@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Box } from '@material-ui/core';
 // Components
-import Greeting from './Greeting';
-import NewActivityButton from './NewActivityButton';
+import Greeting from '../components/home/Greeting';
+import NewActivityButton from '../components/home/NewActivityButton';
 
 const Home = () => {
     return (

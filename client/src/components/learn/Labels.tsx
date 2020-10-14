@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const GET_LABEL_LIST = gql`
-    query {
+    query AllLabels {
         labels {
             id
             name

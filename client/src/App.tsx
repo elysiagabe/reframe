@@ -1,17 +1,17 @@
 import React from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { gql, useQuery } from '@apollo/client';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 
 import Background from './assets/reframe_background.png';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 // Components
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import AuthPageContainer from './pages/AuthPageContainer';
 import TopNav from './components/TopNav';
 import Footer from './components/Footer';
-import Home from './components/home/index';
-import Learn from './components/learn/index';
 
 const useStyles = makeStyles((theme) => ({
   noBackgroundImg: {
@@ -40,12 +40,29 @@ function App() {
   const classes = useStyles();
 
   const location = useLocation();
+  const history = useHistory();
 
   let backgroundImg;
   if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/') {
     backgroundImg = true;
   } else {
     backgroundImg = false;
+  }
+
+  const IS_LOGGED_IN = gql`
+    query IsUserLoggedIn {
+      isLoggedIn @client
+    }
+  `;
+
+  function IsLoggedIn() {
+    const { data } = useQuery(IS_LOGGED_IN);
+    if (!data.isLoggedIn) {
+      history.push("/login")
+      return <Login />
+    } else {
+      return <AuthPageContainer />
+    }
   }
 
   return (
@@ -61,12 +78,8 @@ function App() {
             <Route path="/signup">
               <SignUp />
             </Route>
-            <Route path="/learn">
-              <Learn />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
+
+            <IsLoggedIn />
           </Switch>
 
         </div>

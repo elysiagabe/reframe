@@ -92,9 +92,10 @@ const SignUp: React.FC<FormErrors> = () => {
         confirmPassword: ''
     });
 
-    const [addUser, { loading }] = useMutation(REGISTER_USER, {
+    const [addUser, newUser] = useMutation(REGISTER_USER, {
         update(_, result) {
             history.push("/")
+            console.log(newUser)
         },
         onError(error) {
             setErrors(error?.graphQLErrors[0]?.extensions?.exception?.errors)
@@ -106,7 +107,8 @@ const SignUp: React.FC<FormErrors> = () => {
         addUser();
     }
 
-    if (loading) return <p>Loading...</p>
+    if (newUser.loading) return <p>Loading...</p>
+    if (newUser.error) return <p>Error...</p>
 
     return (
         <Container component="main" maxWidth="xs">
@@ -186,6 +188,7 @@ const SignUp: React.FC<FormErrors> = () => {
                                 fullWidth
                                 id="password"
                                 label="Password"
+                                type="password"
                                 value={formValues.password}
                                 onChange={onChange}
                                 error={errors.password ? true : false}
@@ -202,6 +205,7 @@ const SignUp: React.FC<FormErrors> = () => {
                                 fullWidth
                                 id="confirmPassword"
                                 label="Confirm Password"
+                                type="password"
                                 value={formValues.confirmPassword}
                                 onChange={onChange}
                                 error={errors.confirmPassword ? true : false}

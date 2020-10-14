@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
+  gql,
   ApolloClient,
   ApolloProvider,
   InMemoryCache,
@@ -15,9 +16,21 @@ import App from './App';
 import theme from './theme';
 import * as serviceWorker from './serviceWorker';
 
+import { cache } from './cache';
+
+export const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+  }
+`;
+
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  cache,
   uri: 'http://localhost:4000/',
-  cache: new InMemoryCache()
+  headers: {
+    authorization: localStorage.getItem('token') || '',
+  },
+  typeDefs,
 });
 
 ReactDOM.render(

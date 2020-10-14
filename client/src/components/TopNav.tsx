@@ -3,6 +3,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Tabs, Tab, Box } from '@material-ui/core'; 
 
+import { isLoggedInVar } from '../cache';
+
 import Logo from '../assets/reframe_logo.png';
 
 interface NavTabsProps {
@@ -65,6 +67,10 @@ const TopNav = () => {
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
+        if (newValue === "/login") {
+            localStorage.clear()
+            isLoggedInVar(false)
+        }
         history.push(newValue)
     }
 
@@ -75,6 +81,7 @@ const TopNav = () => {
                 <StyledNavTab label="Home" value="/" />
                 <StyledNavTab label="Learn" value="/learn" /> 
                 <StyledNavTab label="Account" value="/account"/>
+                <StyledNavTab label="Sign Out" value="/login"/>
             </StyledNavTabs>
         </Box>
     )

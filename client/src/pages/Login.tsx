@@ -15,6 +15,7 @@ import { useStyles } from './SignUp';
 
 import { useForm } from '../utils/hooks';
 import Logo from '../assets/reframe_logo.png';
+import { isLoggedInVar } from '../cache';
 
 const LOGIN_USER = gql`
     mutation login(
@@ -43,17 +44,19 @@ const Login: React.FC<FormErrors> = () => {
         password: null
     })
 
-    useEffect(() => {
-        console.log("Errors changed...", errors)
-    }, [errors])
-
     const { onChange, onSubmit, formValues } = useForm(loginUserCallback, {
         email: '',
         password: ''
     });
 
     const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-        update(_, result) {
+        // update(_, result) {
+        //     history.push("/")
+        // },
+        onCompleted({ login }) {
+            localStorage.setItem('token', login.token as string)
+            localStorage.setItem('userId', login.id as string)
+            isLoggedInVar(true)
             history.push("/")
         },
         onError(error) {

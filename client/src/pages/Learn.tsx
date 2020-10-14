@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container, Typography } from '@material-ui/core';
 
-import Labels from './Labels';
+import Labels from '../components/learn/Labels';
 
 const Learn = () => {
     return (
