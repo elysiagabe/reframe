@@ -15,6 +15,7 @@ import {
 
 import { useForm } from '../utils/hooks';
 import Logo from '../assets/reframe_logo.png';
+import { isLoggedInVar } from '../cache';
 
 export const useStyles = makeStyles((theme) => ({
     paper: {
@@ -93,9 +94,11 @@ const SignUp: React.FC<FormErrors> = () => {
     });
 
     const [addUser, newUser] = useMutation(REGISTER_USER, {
-        update(_, result) {
+        onCompleted({ register }) {
+            localStorage.setItem('token', register.token as string)
+            localStorage.setItem('userId', register.id as string)
+            isLoggedInVar(true)
             history.push("/")
-            console.log(newUser)
         },
         onError(error) {
             setErrors(error?.graphQLErrors[0]?.extensions?.exception?.errors)

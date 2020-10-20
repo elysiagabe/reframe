@@ -8,8 +8,6 @@ interface HomeProps {
     firstName: string;
 }
 
-// interface HomeProps extends RouteComponentProps<any>{}
-
 const Home = ({ firstName }: HomeProps) => {
     console.log("NAME: ", firstName)
     return (

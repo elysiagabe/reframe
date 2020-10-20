@@ -5,7 +5,6 @@ import { Button } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     button: {
         boxShadow: 'none',
-        // maxWidth: '300px',
         letterSpacing: '1.4px',
         borderRadius: '40px',
         margin: '32px',
@@ -14,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             boxShadow: 'none'
         },
-        // fontWeight: theme.typography.fontWeightMedium
     }
 }))
 

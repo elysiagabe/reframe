@@ -34,14 +34,13 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? token : "",
+      authorization: token ? `Bearer ${token}` : "",
     }
   }
 });
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
-  // uri: 'http://localhost:4000/',
   link: authLink.concat(httpLink),
   headers: {
     authorization: localStorage.getItem('token') || '',

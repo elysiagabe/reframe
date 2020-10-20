@@ -15,7 +15,7 @@ import { useStyles } from './SignUp';
 
 import { useForm } from '../utils/hooks';
 import Logo from '../assets/reframe_logo.png';
-import { cache, isLoggedInVar } from '../cache';
+import { isLoggedInVar } from '../cache';
 
 const LOGIN_USER = gql`
     mutation login(
@@ -50,16 +50,8 @@ const Login: React.FC<FormErrors> = () => {
     });
 
     const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-        // update(cache, {data: { login }}) {
-        //     cache.readQuery({ query: LOGIN_USER })
-
-        //     cache.writeQuery({
-        //         query: LOGIN_USER,
-        //         data: { user: userInfo }
-        //     })
-        // },
         onCompleted({ login }) {
-            localStorage.setItem('token', `Bearer ${login.token}` as string)
+            localStorage.setItem('token', login.token as string)
             localStorage.setItem('userId', login.id as string)
             isLoggedInVar(true)
             history.push("/")

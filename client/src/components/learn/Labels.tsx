@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             flexGrow: 1,
             display: "flex",
-            // justifyContent: "space-between",
         },
     }),
 );

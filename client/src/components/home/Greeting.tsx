@@ -1,5 +1,4 @@
 import React from 'react';
-import { gql } from '@apollo/client';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
@@ -9,6 +8,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize: '20px',
         textTransform: 'uppercase',
         marginTop: '6.5rem',
+        letterSpacing: '1.5px',
     },
     question: {
         fontSize: '72px',

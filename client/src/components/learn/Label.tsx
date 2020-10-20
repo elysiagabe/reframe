@@ -12,8 +12,6 @@ type LabelProps = {
 const useStyles = makeStyles({
     root: {
         height: 200,
-        // width: 450,
-        // margin: 20,
         boxShadow: "none"
     }
 });
