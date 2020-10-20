@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useApolloClient } from '@apollo/client';
 import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Tabs, Tab, Box } from '@material-ui/core'; 
@@ -57,10 +58,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const TopNav = () => {
+    const client = useApolloClient();
     const history = useHistory();
     const location = useLocation();
-
-    // console.log(location)
 
     const classes = useStyles();
     const [value, setValue] = useState(location.pathname);
@@ -70,6 +70,8 @@ const TopNav = () => {
         if (newValue === "/login") {
             localStorage.clear()
             isLoggedInVar(false)
+            client.resetStore()
+            console.log("store reset?")
         }
         history.push(newValue)
     }

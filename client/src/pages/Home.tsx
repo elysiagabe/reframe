@@ -4,12 +4,19 @@ import { Container, Box } from '@material-ui/core';
 import Greeting from '../components/home/Greeting';
 import NewActivityButton from '../components/home/NewActivityButton';
 
-const Home = () => {
+interface HomeProps {
+    firstName: string;
+}
+
+// interface HomeProps extends RouteComponentProps<any>{}
+
+const Home = ({ firstName }: HomeProps) => {
+    console.log("NAME: ", firstName)
     return (
         <div>
             <Container maxWidth="md">
                 <Box display="flex" flexWrap="wrap" flexDirection="column" alignItems="center" >
-                    <Greeting />
+                    <Greeting firstName={firstName} />
                     <NewActivityButton />
                 </Box>
             </Container>

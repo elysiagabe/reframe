@@ -4,9 +4,10 @@ import {
   gql,
   ApolloClient,
   ApolloProvider,
-  InMemoryCache,
+  createHttpLink,
   NormalizedCacheObject
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,13 +25,29 @@ export const typeDefs = gql`
   }
 `;
 
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000/',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : "",
+    }
+  }
+});
+
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
-  uri: 'http://localhost:4000/',
+  // uri: 'http://localhost:4000/',
+  link: authLink.concat(httpLink),
   headers: {
     authorization: localStorage.getItem('token') || '',
   },
   typeDefs,
+  connectToDevTools: true,
 });
 
 ReactDOM.render(
