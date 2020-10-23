@@ -75,11 +75,11 @@ const TopNav = () => {
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
+        // this signs user out
         if (newValue === "/login") {
             localStorage.clear()
             isLoggedInVar(false)
             client.resetStore()
-            console.log("store reset?")
         }
         history.push(newValue)
     }

@@ -7,6 +7,7 @@ import Learn from './Learn';
 import Account from './Account';
 import Journal from './Journal';
 import Resources from './Resources';
+import NewJournalForm from './NewJournalForm';
 
 export interface UserAccountType {
     accountInfo: {
@@ -53,6 +54,9 @@ const AuthPageContainer: React.FC<AuthPageProps> = () => {
             </Route>
             <Route path="/resources">
                 <Resources />
+            </Route>
+            <Route path="/new">
+                <NewJournalForm />
             </Route>
             <Route exact path="/">
                 <Home firstName={data.accountInfo.firstName} />
