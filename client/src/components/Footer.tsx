@@ -11,10 +11,10 @@ const useStyles = makeStyles((theme) => ({
         height: '2rem',
     },
     icon: {
-        position: 'absolute',
-        // border: '1px solid red',
-        bottom: 16,
+        position: 'fixed',
+        bottom: 20,
         right: 28,
+        zIndex: 100,
     }
 }))
 

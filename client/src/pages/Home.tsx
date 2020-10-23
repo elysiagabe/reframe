@@ -9,7 +9,6 @@ interface HomeProps {
 }
 
 const Home = ({ firstName }: HomeProps) => {
-    console.log("NAME: ", firstName)
     return (
         <div>
             <Container maxWidth="md">

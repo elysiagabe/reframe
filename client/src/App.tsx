@@ -15,7 +15,7 @@ import Footer from './components/Footer';
 
 const useStyles = makeStyles((theme) => ({
   noBackgroundImg: {
-    backgroundColor: '#FEFBFB',
+    backgroundColor: '#EFF1F4',
   },
   backgroundImg: {
     marginTop: 'none',

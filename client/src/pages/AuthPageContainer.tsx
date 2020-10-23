@@ -5,6 +5,8 @@ import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
 import Home from './Home';
 import Learn from './Learn';
 import Account from './Account';
+import Journal from './Journal';
+import Resources from './Resources';
 
 export interface UserAccountType {
     accountInfo: {
@@ -31,12 +33,10 @@ interface AuthPageProps extends RouteComponentProps<any>{
 }
 
 const AuthPageContainer: React.FC<AuthPageProps> = () => {
-    console.log(localStorage.getItem('token'))
     const { data, loading, error } = useQuery<UserAccountType>(GET_USER_INFO);
 
     if (loading) return <p>Loading...</p>;
     if (error || !data) {
-        console.log(error)
         return <p>Error :(</p>
     };
 
@@ -47,6 +47,12 @@ const AuthPageContainer: React.FC<AuthPageProps> = () => {
             </Route>
             <Route path="/account">
                 <Account />
+            </Route>
+            <Route path="/journal">
+                <Journal />
+            </Route>
+            <Route path="/resources">
+                <Resources />
             </Route>
             <Route exact path="/">
                 <Home firstName={data.accountInfo.firstName} />
